@@ -31,11 +31,6 @@ if (
 // To be populated via XHR and querySelector
 let env, networkSiteURL, csrfToken;
 
-// Track all ReactDOM.render calls so we can use a Promise.all()
-// all the way at the end to make sure we don't report "we are done"
-// until all the React stuff is _actually_ done.
-const apps = [];
-
 let main = {
   init() {
     this.fetchEnv(envData => {
@@ -61,7 +56,12 @@ let main = {
 
       GoogleAnalytics.init();
 
-      this.injectReactComponents(app);
+      // Track all ReactDOM.render calls so we can use a Promise.all()
+      // all the way at the end to make sure we don't report "we are done"
+      // until all the React stuff is _actually_ done.
+      const apps = [];
+
+      this.injectReactComponents(apps);
       this.bindGlobalHandlers();
       this.bindGAEventTrackers();
 
@@ -229,7 +229,6 @@ let main = {
   injectReactComponents(apps) {
     injectCommonReactComponents(apps, networkSiteURL, csrfToken);
     injectReactComponents(apps, networkSiteURL, env);
-
     bindEventHandlers();
   }
 };
