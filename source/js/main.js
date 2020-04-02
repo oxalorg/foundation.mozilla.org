@@ -61,7 +61,7 @@ let main = {
 
       GoogleAnalytics.init();
 
-      this.injectReactComponents();
+      this.injectReactComponents(app);
       this.bindGlobalHandlers();
       this.bindGAEventTrackers();
 
@@ -226,7 +226,7 @@ let main = {
   },
 
   // Embed various React components based on the existence of containers within the current page
-  injectReactComponents() {
+  injectReactComponents(apps) {
     injectCommonReactComponents(apps, networkSiteURL, csrfToken);
     injectReactComponents(apps, networkSiteURL, env);
 
