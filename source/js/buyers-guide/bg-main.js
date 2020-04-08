@@ -16,6 +16,7 @@ import Creepometer from "./components/creepometer/creepometer.jsx";
 import copyToClipboard from "../../js/copy-to-clipboard.js";
 import HomepageSlider from "./homepage-c-slider.js";
 import AnalyticsEvents from "./analytics-events.js";
+import initializeSentry from "../common/sentry-config.js";
 
 // Initializing component a11y browser console logging
 if (
@@ -39,6 +40,15 @@ let main = {
     this.fetchEnv(envData => {
       env = envData;
       networkSiteURL = env.NETWORK_SITE_URL;
+
+      if (env.SENTRY_DSN) {
+        // Initialize Sentry error reporting
+        initializeSentry(
+          env.SENTRY_DSN,
+          env.RELEASE_VERSION,
+          env.SENTRY_ENVIRONMENT
+        );
+      }
 
       csrfToken = document.querySelector('meta[name="csrf-token"]');
       csrfToken = csrfToken ? csrfToken.getAttribute("content") : false;
