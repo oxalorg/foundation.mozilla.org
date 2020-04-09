@@ -16,9 +16,12 @@ from .pagemodels.voting import (
     RangeVote,
 )
 
-from .pagemodels.product import (
-    CloudinaryImageField,
+from .pagemodels.products.base import (
     Product,
+)
+
+from .pagemodels.products.general import (
+    CloudinaryImageField,
 )
 
 from .pagemodels.privacy import (
